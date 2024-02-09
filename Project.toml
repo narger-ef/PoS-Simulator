@@ -1,4 +1,4 @@
-name = "PoS_Simulator"
+name = "Simulator"
 uuid = "6bce440c-8996-4510-afdf-c79a3dae41c9"
 authors = ["narger <52449688+narger-ef@users.noreply.github.com>"]
 version = "0.1.0"
