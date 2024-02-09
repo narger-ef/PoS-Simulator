@@ -3,7 +3,7 @@ function simulate(pos::PoS, stakes::Vector{Float64}, θ::Float64, reward::Float6
 
     t = d(gini(stakes), θ)
 
-    for i in 1 : n_epochs
+    @showprogress for i in 1 : n_epochs
         try_to_join(stakes, p_join)
         try_to_quit(stakes, p_quit)
 
@@ -11,7 +11,7 @@ function simulate(pos::PoS, stakes::Vector{Float64}, θ::Float64, reward::Float6
         push!(gini_history, g)
             
         #speed = abs(g - θ) / s
-        s = 0.001
+        s = 0.00005
             
         validator = consensus(pos, stakes, t)
         #stakes[validator] += constant_reward(Float64(reward), n_epochs)
