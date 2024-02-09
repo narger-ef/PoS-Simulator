@@ -7,8 +7,9 @@ using ProgressMeter
 
 #Defining some enums
 @enum Distribution Uniform=1 Gini=2
+@enum PoS Weighted=1 OppositeWeighted=2 GiniStabilized=3
 """
-    gini_coefficient(data::Vector{Float64})
+    gini(data::Vector{Float64})
 
 Calculates the Gini coefficient of a given dataset.
 
@@ -24,9 +25,9 @@ The Gini coefficient of the input dataset. The coefficient ranges from 0 (perfec
 # Examples
 ```julia
 data = [100.0, 200.0, 300.0, 400.0, 500.0]
-gini_coefficient(data)  # Output: 0.2
+gini(data)  # Output: 0.2
 """
-function gini_coefficient(data::Vector{Float64})
+function gini(data::Vector{Float64})
     # Calculate the number of data points
     n = length(data)
 
@@ -151,9 +152,9 @@ The index of the peer selected as the opposite consensus, based on opposite weig
 # Examples
 ```julia
 peers = [0.2, 0.3, 0.5]
-inverse_weighted_consensus(peers)  # Output: index of the selected peer
+opposite_weighted_consensus(peers)  # Output: index of the selected peer
 """
-function inverse_weighted_consensus(peers::Vector{Float64})
+function opposite_weighted_consensus(peers::Vector{Float64})
     opposite_peers = abs.(maximum(peers) .- peers)
 
     cumulative_probabilities = cumsum(opposite_peers/sum(opposite_peers))
@@ -242,6 +243,17 @@ function generate_peers(n_peers::Int64, initial_volume::Float64, distribution_ty
         end
         return generate_vector_with_gini(n_peers, initial_volume, initial_gini)
     end
+end
+
+function consensus(pos::PoS, stakes::Vector{Float64}, t::Float64)
+    if pos == Weighted
+        return weighted_consensus(stakes)
+    elseif pos == OppositeWeighted
+        return opposite_weighted_consensus(stakes)
+    elseif pos == GiniStabilized
+        return gini_stabilized_consensus(stakes, t)
+    end
+
 end
 
 function generate_vector_with_gini(n_peers::Int, initial_volume::Float64, gini::Float64)
