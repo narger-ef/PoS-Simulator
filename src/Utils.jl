@@ -5,9 +5,7 @@ using LinearAlgebra
 using ThreadSafeDicts
 using ProgressMeter
 
-#Defining some enums
-@enum Distribution Uniform=1 Gini=2
-@enum PoS Weighted=1 OppositeWeighted=2 GiniStabilized=3
+
 """
     gini(data::Vector{Float64})
 
@@ -186,6 +184,10 @@ t = 0.5
 dynamic_lerp_consensus(peers, t)  # Output: index of the selected agent
 """
 function gini_stabilized_consensus(peers::Vector{Float64}, t::Float64)
+    if t == -1
+        error("Can not launch GiniStabilized with t = -1")
+    end
+
     weighted = cumsum(peers/sum(peers))
         
     processed_peers = abs.(maximum(peers) .- peers)
@@ -245,7 +247,7 @@ function generate_peers(n_peers::Int64, initial_volume::Float64, distribution_ty
     end
 end
 
-function consensus(pos::PoS, stakes::Vector{Float64}, t::Float64)
+function consensus(pos::PoS, stakes::Vector{Float64}, t::Float64 = -1.0)
     if pos == Weighted
         return weighted_consensus(stakes)
     elseif pos == OppositeWeighted
@@ -308,7 +310,7 @@ end
 
 function compute_smooth_parameter3(current_gini::Float64, target_gini::Float64)
     if current_gini > target_gini
-        return 0.5
+        return 0.0
     end
     if current_gini < target_gini
         return 1.5

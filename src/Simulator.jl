@@ -1,23 +1,35 @@
-function simulate(pos::PoS, stakes::Vector{Float64}, θ::Float64, reward::Float64, p_join::Float64 = 0.0, p_quit::Float64 = 0.0)
+include("Parameters.jl")
+include("Utils.jl")
+
+function simulate(stakes::Vector{Float64}, params::Parameters)
     gini_history = Vector{Float64}()
 
-    t = d(gini(stakes), θ)
+    t = d(gini(stakes), params.θ)
 
-    @showprogress for i in 1 : n_epochs
-        try_to_join(stakes, p_join)
-        try_to_quit(stakes, p_quit)
+    for i in 1 : params.n_epochs
+        try_to_join(stakes, params.p_join)
+        try_to_quit(stakes, params.p_quit)
 
         g = gini(stakes)
         push!(gini_history, g)
             
-        #speed = abs(g - θ) / s
-        s = 0.00005
-            
-        validator = consensus(pos, stakes, t)
-        #stakes[validator] += constant_reward(Float64(reward), n_epochs)
-        stakes[validator] += reward
+        if params.proof_of_stake == GiniStabilized
+            #In case of GiniStabilized, compute 's' and 't'
+            if params.s_type == Constant
+                s = params.s_val
+            elseif params.s_type == Linear
+                s = abs(g - θ) * params.s_val
+            end
 
-        t = lerp(t, d(g, θ), s)
+            validator = consensus(params.proof_of_stake, stakes, t)
+            t = lerp(t, d(g, params.θ), s)
+        else
+            validator = consensus(params.proof_of_stake, stakes)
+        end
+            
+        #stakes[validator] += constant_reward(Float64(reward), n_epochs)
+        stakes[validator] += params.reward
+
     end
 
     return gini_history
