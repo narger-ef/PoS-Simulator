@@ -1,7 +1,7 @@
 @enum Distribution Uniform=1 Gini=2 Random=3
 @enum PoS Weighted=1 OppositeWeighted=2 GiniStabilized=3
 @enum NewEntry NewMax=0 NewMin=1 NewRandom=2 NewAverage=3
-@enum SType Constant=0 Linear=1
+@enum SType Constant=0 Linear=1 Quadratic=2 Sqrt=3
 
 mutable struct Parameters
     n_epochs::Int64

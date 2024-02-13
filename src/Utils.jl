@@ -325,10 +325,17 @@ function d(g::Float64, θ::Float64)
     end
 end
 
-function try_to_join(stakes::Vector{Float64}, p::Float64)
+function try_to_join(stakes::Vector{Float64}, p::Float64, join_amount::NewEntry)
     if rand() > 1 - p
-        #Someone joins with an average stake
-        push!(stakes, sum(stakes)/size(stakes)[1])
+        if join_amount == NewAverage
+            push!(stakes, sum(stakes)/size(stakes)[1])
+        elseif join_amount == NewMax
+            push!(stakes, maximum(stakes))
+        elseif join_amount == NewMin
+            push!(stakes, minimum(stakes))
+        elseif join_amount == NewRandom
+            push!(stakes, stakes[rand(1:length(stakes))])
+        end
     end
 end
 
