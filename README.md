@@ -22,3 +22,12 @@ We run the following five simulations:
 5) Quadratic, $k = 100$
 
 Test it online here: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/narger-ef/Proof-of-Stake-Simulator/HEAD?urlpath=notebooks/examples/experiment5/notebook.ipynb)
+
+## Authors
+
+- Alberto Leporati (`alberto.leporati@unimib.it`)
+- Lorenzo Rovida (`lorenzo.rovida@unimib.it`)
+
+Made with <3  at [Bicocca Security Lab](https://www.bislab.unimib.it), at University of Milan-Bicocca.
+
+<img src="imgs/lab_logo.png" alt="BisLab logo" width=20%>
