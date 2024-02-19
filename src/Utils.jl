@@ -327,7 +327,7 @@ function d(g::Float64, θ::Float64)
     end
 end
 
-function try_to_join(stakes::Vector{Float64}, p::Float64, join_amount::NewEntry)
+function try_to_join(stakes::Vector{Float64}, corrupted::Vector{Int64}, p::Float64, join_amount::NewEntry, percentage_corrupted::Float64)
     if rand() > 1 - p
         if join_amount == NewAverage
             push!(stakes, sum(stakes)/size(stakes)[1])
@@ -339,8 +339,13 @@ function try_to_join(stakes::Vector{Float64}, p::Float64, join_amount::NewEntry)
             push!(stakes, stakes[rand(1:length(stakes))])
         end
 
+        if rand() > 1 - percentage_corrupted
+            #The newly added peer is corrupted
+            push!(corrupted, length(stakes))
+        end
+
         #Try to add another peer
-        try_to_join(stakes, p, join_amount)
+        try_to_join(stakes, corrupted, p, join_amount, percentage_corrupted)
     end
 end
 

@@ -5,10 +5,12 @@ function simulate(stakes::Vector{Float64}, corrupted::Vector{Int64}, params::Par
     gini_history = Vector{Float64}()
     n_peers_history = Vector{Int64}()
 
+    percentage_corrupted = length(corrupted) / length(stakes)
+
     t = d(gini(stakes), params.θ)
 
     for i in 1 : params.n_epochs
-        try_to_join(stakes, params.p_join, params.join_amount)
+        try_to_join(stakes, corrupted, params.p_join, params.join_amount, percentage_corrupted)
         try_to_leave(stakes, params.p_leave)
 
         g = gini(stakes)
@@ -49,10 +51,12 @@ function simulate_verbose(stakes::Vector{Float64}, corrupted::Vector{Int64}, par
     gini_history = Vector{Float64}()
     n_peers_history = Vector{Int64}()
 
+    percentage_corrupted = length(corrupted) / length(stakes)
+
     t = d(gini(stakes), params.θ)
 
     @showprogress for i in 1 : params.n_epochs
-        try_to_join(stakes, params.p_join, params.join_amount)
+        try_to_join(stakes, corrupted, params.p_join, params.join_amount, percentage_corrupted)
         try_to_leave(stakes, params.p_leave)
 
         g = gini(stakes)
