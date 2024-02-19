@@ -1,4 +1,5 @@
 # Proof of Stake Simulator
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/narger-ef/Proof-of-Stake-Simulator/HEAD?urlpath=notebooks/examples/experiment5/notebook.ipynb)
 
 In this repository we present a Proof-of-Stake Simulator written in Julia. We used this simulator in order to study the trend of Gini coefficient under different consensus algorithms.
 
