@@ -13,12 +13,12 @@ mutable struct Parameters
     n_corrupted::Int64
     p_fail::Float64
     p_join::Float64
-    p_quit::Float64
+    p_leave::Float64
     join_amount::NewEntry
     penalty_percentage::Float64
     θ::Float64
     s_type::SType
-    s_val::Float64
+    k::Float64
     reward::Float64
     
     function Parameters(
@@ -31,16 +31,16 @@ mutable struct Parameters
             n_corrupted::Int64=20,
             p_fail::Float64=0.50,
             p_join::Float64=0.001,
-            p_quit::Float64=0.001,
+            p_leave::Float64=0.001,
             join_amount::NewEntry=NewRandom,
             penalty_percentage::Float64=0.50,
             θ::Float64=0.3,
             s_type::SType=Linear,
-            s_val::Float64=0.001,
+            k::Float64=0.001,
             reward::Float64=10.0)
         
         new(n_epochs, proof_of_stake, initial_stake_volume, initial_distribution,
-            initial_gini, n_peers, n_corrupted, p_fail, p_join, p_quit,
-            join_amount, penalty_percentage, θ, s_type, s_val, reward)
+            initial_gini, n_peers, n_corrupted, p_fail, p_join, p_leave,
+            join_amount, penalty_percentage, θ, s_type, k, reward)
     end
 end

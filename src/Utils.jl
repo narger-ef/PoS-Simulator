@@ -244,6 +244,8 @@ function generate_peers(n_peers::Int64, initial_volume::Float64, distribution_ty
             initial_gini = 0.3
         end
         return generate_vector_with_gini(n_peers, initial_volume, initial_gini)
+    elseif distribution_type == Random
+        println("TO BE IMPLEMENTED!")
     end
 end
 
@@ -336,10 +338,19 @@ function try_to_join(stakes::Vector{Float64}, p::Float64, join_amount::NewEntry)
         elseif join_amount == NewRandom
             push!(stakes, stakes[rand(1:length(stakes))])
         end
+
+        #Try to add another peer
+        try_to_join(stakes, p, join_amount)
     end
 end
 
-function try_to_quit(stakes::Vector{Float64}, p::Float64) 
+function try_to_leave(stakes::Vector{Float64}, p::Float64) 
+    random_values = rand(length(stakes))
+
+    #I extract (n_peers) random numbers, the ones > than p are the indexes
+    #of the leaving peers
+    mask = random_values .> (1 - p)
+
     if rand() > 1 - p
         deleteat!(stakes, rand(1:size(stakes)[1]))
     end
