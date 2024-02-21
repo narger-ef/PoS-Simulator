@@ -1,5 +1,5 @@
 # Proof of Stake Simulator
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/narger-ef/Proof-of-Stake-Simulator/HEAD?urlpath=notebooks/examples/experiment5/notebook.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/narger-ef/Proof-of-Stake-Simulator/HEAD)
 
 In this repository we present a Proof-of-Stake Simulator written in Julia. We used this simulator in order to study the trend of Gini coefficient under different consensus algorithms.
 
@@ -59,11 +59,22 @@ history, peers = simulate(stakes, corrupted, parameters);
 The variable `history` will contain the Gini coefficient computed at the end of each epoch, and `peers` will contain the number of peers at the end of each epoch.
 Examples can be found in the `examples` folder, and are described below.
 
-### Experiment 1
-We use *Weighted PoS* in order to show the trend for $g$ to go to 1
-### Experiment 2
+### Experiment 1 and 2
+Online notebook available: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/narger-ef/Proof-of-Stake-Simulator/HEAD?urlpath=notebooks/examples/experiment-1-and-2/notebook.ipynb)
+
+We use *Weighted PoS* in order to show the trend for $g$ to go to 1, and *OppositeWeighted PoS* in order to show the trend for $g$ to go to 0
+
 ### Experiment 3
+Online notebook available: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/narger-ef/Proof-of-Stake-Simulator/HEAD?urlpath=notebooks/examples/experiment-3/notebook.ipynb)
+
+We use *GiniStabilized PoS* to show that it is possible to control the Gini coefficient $g$. We set a target value $\theta = 0.3$ and plot the trend of $g$. 
+In particular, we chose a Constant update for *GiniStabilized*
+
 ### Experiment 4
+Online notebook available: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/narger-ef/Proof-of-Stake-Simulator/HEAD?urlpath=notebooks/examples/experiment-4/notebook.ipynb)
+
+We use *GiniStabilized PoS* and *Linear* updates, showing that it is possible to obtain a smooth trend for the Gini coefficient around the target value $\theta$.
+
 ### Experiment 5
 In this experiment we want to run different simulations on different types of ${\tt g\_funct}$
 All the simulations share a lot of parameters (such as the number of epochs, the number of peers, the PoS type and so on), but they differ on the function applied to $s$ at each epoch. We remark that:
@@ -80,7 +91,7 @@ We run the following five simulations:
 4) Quadratic, $k = 10$
 5) Quadratic, $k = 100$
 
-Test it online here: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/narger-ef/Proof-of-Stake-Simulator/HEAD?urlpath=notebooks/examples/experiment5/notebook.ipynb)
+Test it online here: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/narger-ef/Proof-of-Stake-Simulator/HEAD?urlpath=notebooks/examples/experiment-5/notebook.ipynb)
 
 ## Authors
 
